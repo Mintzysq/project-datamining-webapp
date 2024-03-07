@@ -144,5 +144,5 @@ if data is not None:
             st.write(px.imshow(corr_matrix, color_continuous_scale='viridis'))
             st.subheader("Correlation Matrix", divider='blue')
             st.write("Correlation between numeric variables:")
-            st.write(corr_matrix.style.background_gradient(cmap='viridis'))
+
 
