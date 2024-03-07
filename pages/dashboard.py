@@ -9,11 +9,10 @@ st.set_page_config(page_title="Dashbord",
 
 st.title(":chart_with_upwards_trend: CUSTOMER SEGMENTATION!!!")
 st.markdown('<style>div.block-container{padding-top:1rem;}<style>',unsafe_allow_html=True)
-image = Image.open('../image/ลองๆ.jpg')
-resized_image = image.resize((400, 250)) 
-st.image(resized_image, caption='หล่อเท่ๆ', output_format='JPEG')
-st.markdown("Here's a bouquet &mdash;\
-            :tulip::cherry_blossom::rose::hibiscus::sunflower::blossom:")
+image = Image.open('../image/Customer-Segmentation.png')
+resized_image = image.resize((4000, 500)) 
+st.image(resized_image, caption='', output_format='JPEG')
+st.markdown("👉👉👉 Welcome to our Customer Segmentation Dashboard! Upload your CSV file to explore insights and visualize customer segments. Let's uncover valuable insights together! 👈👈👈")
 
 input_csv = st.sidebar.file_uploader("Upload your CSV File", type=['csv'])
 
@@ -28,7 +27,7 @@ with col1:
     if data is not None:
         st.info("CSV Uploaded successfully")
         st.dataframe(data)
-        txt1 = st.text_area("Text 1", "First text area")
+        txt1 = st.text_area("Your DATA", "To generate plots, your CSV file must contain a column named 'Cluster'. Without this column, our system won't be able to generate visualizations.")
 
         st.subheader("Pie Chart Grouped by Cluster", divider='blue')
         if 'Cluster' in data.columns:
@@ -100,7 +99,8 @@ with col2:
                 st.dataframe(data[[y_variable_bar, 'Cluster']])
         else:
             st.warning("Cluster column not found in the uploaded CSV file.")
-        txt2 = st.text_area("Text 2", "Second text area")
+        txt2 = st.text_area("Customer Behavior Analysis", "This dashboard provides insights into customer behavior based on segmentation. Explore various visualizations to understand customer clusters and their characteristics.")
+
 
 if data is not None:
     try:
@@ -108,25 +108,26 @@ if data is not None:
             st.warning("Cluster column not found in the uploaded CSV file.")
         else:
             st.subheader("Scatter Plot", divider='blue')
-        
-        numeric_data = data.select_dtypes(include=['float64', 'int64'])
-        
-        if not numeric_data.empty:           
-            col1, col2 = st.columns(2)
-            with col1:
-                x_variable = st.selectbox("Select X-axis variable", numeric_data.columns, key="x_variable")
-            with col2:
-                y_variable = st.selectbox("Select Y-axis variable", numeric_data.columns, key="y_variable")
-            
-            fig_scatter = px.scatter(data, x=x_variable, y=y_variable, color='Cluster')
-            fig_scatter.update_xaxes(title_text=x_variable)
-            fig_scatter.update_yaxes(title_text=y_variable)
-            st.plotly_chart(fig_scatter, use_container_width=True)    
 
-            with st.expander("View Data for Scatter Plot"):
-                st.dataframe(data[[x_variable, y_variable, 'Cluster']])
-        else:
-            st.warning("No numeric columns found in the uploaded data. Please upload a CSV file with numeric columns.")
+            numeric_data = data.select_dtypes(include=['float64', 'int64'])
+
+            if not numeric_data.empty:           
+                col1, col2 = st.columns(2)
+                with col1:
+                    x_variable = st.selectbox("Select X-axis variable", numeric_data.columns, key="x_variable")
+                with col2:
+                    y_variable = st.selectbox("Select Y-axis variable", numeric_data.columns, key="y_variable")
+
+                fig_scatter = px.scatter(data, x=x_variable, y=y_variable, color='Cluster')
+                fig_scatter.update_xaxes(title_text=x_variable)
+                fig_scatter.update_yaxes(title_text=y_variable)
+                st.plotly_chart(fig_scatter, use_container_width=True)    
+
+                with st.expander("View Data for Scatter Plot"):
+                    st.dataframe(data[[x_variable, y_variable, 'Cluster']])
+
+            else:
+                st.warning("No numeric columns found in the uploaded data. Please upload a CSV file with numeric columns.")
     except ValueError as e:
         if "Duplicate column names found" in str(e):
             st.warning("Duplicate column names found but ignored. Proceeding with the analysis.")
@@ -134,4 +135,13 @@ if data is not None:
             raise e
 
 
+if data is not None:
+    if not numeric_data.empty:
+        corr_matrix = numeric_data.corr()
+        st.subheader("Correlation Matrix Heatmap", divider='blue')
+        st.write("Correlation between numeric variables:")
+        st.write(px.imshow(corr_matrix, color_continuous_scale='viridis'))
+        st.subheader("Correlation Matrix", divider='blue')
+        st.write("Correlation between numeric variables:")
+        st.write(corr_matrix.style.background_gradient(cmap='viridis'))
 
