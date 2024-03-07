@@ -1,29 +1,29 @@
-    import streamlit as st
-    import pandas as pd
-    import plotly.express as px
-    from PIL import Image 
+import streamlit as st
+import pandas as pd
+import plotly.express as px
+from PIL import Image 
 
-    st.set_page_config(page_title="Dashbord",
+st.set_page_config(page_title="Dashbord",
                     page_icon=":bar_chart:",
                     layout='wide')
 
-    st.title(":chart_with_upwards_trend: CUSTOMER SEGMENTATION!!!")
-    st.markdown('<style>div.block-container{padding-top:1rem;}<style>',unsafe_allow_html=True)
-    #image = Image.open('../image/Customer-Segmentation.png')
-    #resized_image = image.resize((4000, 500)) 
-    #st.image(resized_image, caption='', output_format='JPEG')
-    st.markdown("👉👉👉 Welcome to our Customer Segmentation Dashboard! Upload your CSV file to explore insights and visualize customer segments. Let's uncover valuable insights together! 👈👈👈")
+st.title(":chart_with_upwards_trend: CUSTOMER SEGMENTATION!!!")
+st.markdown('<style>div.block-container{padding-top:1rem;}<style>',unsafe_allow_html=True)
+#image = Image.open('../image/Customer-Segmentation.png')
+#resized_image = image.resize((4000, 500)) 
+#st.image(resized_image, caption='', output_format='JPEG')
+st.markdown("👉👉👉 Welcome to our Customer Segmentation Dashboard! Upload your CSV file to explore insights and visualize customer segments. Let's uncover valuable insights together! 👈👈👈")
 
-    input_csv = st.sidebar.file_uploader("Upload your CSV File", type=['csv'])
+input_csv = st.sidebar.file_uploader("Upload your CSV File", type=['csv'])
 
-    data = None  
+data = None  
 
-    if input_csv is not None:
+if input_csv is not None:
         data = pd.read_csv(input_csv)
 
-    col1, col2 = st.columns([1, 1])
+col1, col2 = st.columns([1, 1])
 
-    with col1:
+with col1:
         if data is not None:
             st.info("CSV Uploaded successfully")
             st.dataframe(data)
@@ -64,7 +64,7 @@
             else:
                 st.warning("Cluster column not found in the uploaded CSV file.")
 
-    with col2:
+with col2:
         if data is not None:
             st.subheader("Boxplot Grouped by Cluster", divider='blue')
             if 'Cluster' in data.columns:
@@ -102,7 +102,7 @@
             txt2 = st.text_area("Customer Behavior Analysis", "This dashboard provides insights into customer behavior based on segmentation. Explore various visualizations to understand customer clusters and their characteristics.")
 
 
-    if data is not None:
+if data is not None:
         try:
             if 'Cluster' not in data.columns:
                 st.warning("Cluster column not found in the uploaded CSV file.")
@@ -135,7 +135,7 @@
                 raise e
 
 
-    if data is not None:
+if data is not None:
         if not numeric_data.empty:
             corr_matrix = numeric_data.corr()
             st.subheader("Correlation Matrix Heatmap", divider='blue')
