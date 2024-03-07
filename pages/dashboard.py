@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
-import matplotlib as plt
+import matplotlib 
 from PIL import Image 
 
 st.set_page_config(page_title="Dashbord",
