@@ -135,14 +135,14 @@ if data is not None:
             else:
                 raise e
 
-'''
-if data is not None:
-        if not numeric_data.empty:
-            corr_matrix = numeric_data.corr()
-            st.subheader("Correlation Matrix Heatmap", divider='blue')
-            st.write("Correlation between numeric variables:")
-            st.write(px.imshow(corr_matrix, color_continuous_scale='viridis'))
-            st.subheader("Correlation Matrix", divider='blue')
-            st.write("Correlation between numeric variables:")
-            st.write(corr_matrix.style.background_gradient(cmap='viridis'))
-'''
+
+#if data is not None:
+        #if not numeric_data.empty:
+            #corr_matrix = numeric_data.corr()
+            #st.subheader("Correlation Matrix Heatmap", divider='blue')
+            #st.write("Correlation between numeric variables:")
+            #st.write(px.imshow(corr_matrix, color_continuous_scale='viridis'))
+            #st.subheader("Correlation Matrix", divider='blue')
+            #st.write("Correlation between numeric variables:")
+            #st.write(corr_matrix.style.background_gradient(cmap='viridis'))
+
